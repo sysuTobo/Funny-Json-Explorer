@@ -1,6 +1,7 @@
 package com.fje.utils;
 import com.fje.JsonExplorer;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class PropertiesUtil {
@@ -19,7 +20,8 @@ public class PropertiesUtil {
         try {
             props = new Properties();
             InputStream in = JsonExplorer.class.getClassLoader().getResourceAsStream(fileName);
-            props.load(in);
+            InputStreamReader inputStreamReader = new InputStreamReader(in, "8859_1");
+            props.load(inputStreamReader);
         } catch (Exception e) {
             e.printStackTrace();
         }

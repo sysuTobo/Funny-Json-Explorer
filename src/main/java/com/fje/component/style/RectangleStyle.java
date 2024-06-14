@@ -1,6 +1,6 @@
 package com.fje.component.style;
 
-import com.fje.component.icon.Icon;
+import com.fje.component.icon.IIconConfig;
 import com.fje.utils.json.JSONComponent;
 import com.fje.utils.json.JSONComposite;
 import com.fje.utils.json.JSONLeaf;
@@ -8,31 +8,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RectangleStyle extends Style{
-//    private IconFamilyConfig iconFamilyConfig;
-//
-//    private String icon;
-    private Boolean isFirst = true;
+    private Boolean isFirst;
+
+    public RectangleStyle() {
+        this.isFirst = true;
+    }
+
     @Override
-    public void format(String json, Icon icon) {
-        System.out.println("以矩形样式显示 JSON");
+    public void format(String json, IIconConfig icon) {
         JSONObject jsonObject = new JSONObject(json);
         JSONComponent root = parseJSONObject(jsonObject); // 转化为 JSONComponent
         displayJsonObject(root.getJSONObject(), 0, icon);
     }
-
-
-//    @Override
-//    public void setIcon(String icon) {
-//        this.icon = icon;
-//    }
-//
-//    @Override
-//    public void setIconFamilyConfig(IconFamilyConfig iconFamilyConfig) {
-//        this.iconFamilyConfig = iconFamilyConfig;
-//    }
-
     // 递归显示 JSONObject
-    private void displayJsonObject(JSONObject jsonObject, int indent, Icon icon) {
+    private void displayJsonObject(JSONObject jsonObject, int indent, IIconConfig icon) {
         for (String key : jsonObject.keySet()) {
             Object value = jsonObject.get(key);
             boolean isObject = value instanceof JSONObject;
@@ -50,12 +39,8 @@ public class RectangleStyle extends Style{
             else{
                 System.out.print("├─ ");
             }
-
-
-            // 如果值是对象或数组，则只打印键，否则打印键值对
-
             if (!(isObject || isArray)) {
-                System.out.print(iconFamilyConfig.getLeafIcon(icon) + key + ": " + value);
+                System.out.print(icon.getIconLeaf() + key + ": " + value);
                 // 计算需要补齐的长度
                 int paddingLength = 50 - key.length()- value.toString().length() - indent * 3 - 2;
                 for (int i = 0; i < paddingLength; i++) {
@@ -73,9 +58,9 @@ public class RectangleStyle extends Style{
                 System.out.println();
             }else{
                 if(isObject && ((JSONObject) value).keySet().size() == 0){
-                    System.out.print(iconFamilyConfig.getLeafIcon(icon) + key);
+                    System.out.print(icon.getIconLeaf() + key);
                 }else{
-                    System.out.print(iconFamilyConfig.getNodeIcon(icon) + key);
+                    System.out.print(icon.getIconNode() + key);
                 }
                 // 计算需要补齐的长度
                 int paddingLength = 50 - key.length() - indent * 3;
@@ -97,16 +82,16 @@ public class RectangleStyle extends Style{
 
             // 递归处理对象和数组
             if (isObject) {
-                displayJsonObject((JSONObject) value, indent + 1);
+                displayJsonObject((JSONObject) value, indent + 1,icon);
             } else if (isArray) {
-                displayJsonArray((JSONArray) value, indent + 1);
+                displayJsonArray((JSONArray) value, indent + 1,icon);
             }
 
         }
     }
 
     // 递归显示 JSONArray
-    private void displayJsonArray(JSONArray jsonArray, int indent) {
+    private void displayJsonArray(JSONArray jsonArray, int indent, IIconConfig icon) {
         for (int i = 0; i < jsonArray.length(); i++) {
 
             Object value = jsonArray.get(i);
@@ -127,9 +112,9 @@ public class RectangleStyle extends Style{
             }
             // 递归处理对象和数组，否则直接打印值
             if (isObject) {
-                displayJsonObject((JSONObject) value, indent + 1);
+                displayJsonObject((JSONObject) value, indent + 1,icon);
             } else if (isArray) {
-                displayJsonArray((JSONArray) value, indent + 1);
+                displayJsonArray((JSONArray) value, indent + 1,icon);
             } else {
                 System.out.print(value);
                 // 计算需要补齐的长度

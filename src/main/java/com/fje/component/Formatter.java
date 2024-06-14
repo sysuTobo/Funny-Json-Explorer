@@ -1,11 +1,7 @@
 package com.fje.component;
 
 import com.fje.component.icon.IIconConfig;
-import com.fje.component.icon.Icon;
 import com.fje.component.style.Style;
-import org.json.JSONObject;
-
-import java.util.Map;
 
 public class Formatter {
     private Style style;
@@ -22,7 +18,20 @@ public class Formatter {
     public Formatter() {
     }
 
+    public Formatter(Style style, IIconConfig icon) {
+        this.style = style;
+        this.icon = icon;
+    }
+
     public void format(String json) {
         this.style.format(json, icon);
+    }
+
+    @Override
+    public String toString() {
+        return "Formatter{" +
+                "style=" + style +
+                ", icon=" + icon +
+                '}';
     }
 }
