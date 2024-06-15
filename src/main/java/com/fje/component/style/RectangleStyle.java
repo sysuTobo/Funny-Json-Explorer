@@ -137,8 +137,6 @@ public class RectangleStyle extends Style{
         }
     }
 
-
-    // 打印缩进
     private void printIndent(int indent, Boolean isLast) {
         if(!isLast){
             for (int i = 0; i < indent; i++) {

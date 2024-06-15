@@ -20,7 +20,7 @@ public class PropertiesUtil {
         try {
             props = new Properties();
             InputStream in = JsonExplorer.class.getClassLoader().getResourceAsStream(fileName);
-            InputStreamReader inputStreamReader = new InputStreamReader(in, "8859_1");
+            InputStreamReader inputStreamReader = new InputStreamReader(in, "utf-8");
             props.load(inputStreamReader);
         } catch (Exception e) {
             e.printStackTrace();

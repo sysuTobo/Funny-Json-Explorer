@@ -25,7 +25,6 @@ public class FormatterBuilder {
         } else if ("tree".equals(style)) {
             factory = new TreeFactory();
         } else {
-            // 默认矩形style
             factory = new RectangleFactory();
         }
         return factory.createStyle();
@@ -33,7 +32,11 @@ public class FormatterBuilder {
 
     private IIconConfig buildIcon(){
         IIconConfig iIconConfig = new IIConfigImpl();
-        iIconConfig.setIcon(this.icon);
+        if(this.icon == null || this.icon.isEmpty()) {
+            iIconConfig.setIcon("default");
+        } else {
+            iIconConfig.setIcon(this.icon);
+        }
         return iIconConfig;
     }
     public Formatter build() {
@@ -43,15 +46,5 @@ public class FormatterBuilder {
         formatter.setStyle(style);
         formatter.setIcon(iIconConfig);
         return formatter;
-//        Formatter formatter = formatterFactory.createFormatter();
-//        formatter.hello();
-//        String[] styles = {"rectangle", "tree"};
-//        String[] icons = {"default", "poker"};
-//
-//        for (String style : styles) {
-//            for (String icon : icons) {
-//
-//            }
-//        }
     }
 }

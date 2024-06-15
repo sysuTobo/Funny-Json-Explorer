@@ -11,11 +11,9 @@ public class IIConfigImpl implements IIconConfig{
 
     private Map<String, String> map = new HashMap<String, String>();
     public void setIcon(String iconName) {
-        System.out.println(iconName + POSTFIX);
         PropertiesUtil propertiesUtil = new PropertiesUtil(iconName + POSTFIX);
         map.put("node", propertiesUtil.get("node"));
         map.put("leaf", propertiesUtil.get("leaf"));
-        System.out.println(map);
     }
 
     public String getIconNode() {
